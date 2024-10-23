@@ -23,6 +23,9 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar rcs $@ $^
 
+%.o: %.c includes/printf.
+	%(CC) $(CFLAGS) -c $< -o $@
+
 clean:
 	rm -f $(OBJS)
 
