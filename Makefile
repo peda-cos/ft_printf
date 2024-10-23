@@ -6,7 +6,7 @@
 #    By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/22 22:41:29 by peda-cos          #+#    #+#              #
-#    Updated: 2024/10/22 23:24:02 by peda-cos         ###   ########.fr        #
+#    Updated: 2024/10/22 23:26:06 by peda-cos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ CFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $@ @^
+	ar rcs $@ $^
 
 clean:
 	rm -f $(OBJS)
