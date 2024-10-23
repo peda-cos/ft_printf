@@ -14,9 +14,7 @@ NAME = libftprintf.a
 
 SRCS = ft_printf.c src/ft_putchar_fd.c src/ft_putstr_fd.c src/ft_putnbr_fd.c \
 	   src/ft_putunbr_fd.c src/ft_puthex_fd.c src/ft_putptr_fd.c
-
 OBJS = $(SRCS:.c=.o)
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
