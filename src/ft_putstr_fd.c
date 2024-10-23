@@ -6,11 +6,11 @@
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:29:03 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/22 23:07:57 by peda-cos         ###   ########.fr       */
+/*   Updated: 2024/10/22 23:20:14 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "../includes/printft.h"
 
 int	ft_putstr_fd(char *s, int fd)
 {
