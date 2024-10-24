@@ -6,7 +6,7 @@
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:24:31 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 01:16:17 by peda-cos         ###   ########.fr       */
+/*   Updated: 2024/10/24 01:29:54 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static int	ft_process_format(const char *format, va_list args, int *i)
 {
-	int	count;
+	int				count;
+	unsigned long	ptr;
 
 	count = 0;
 	if (format[*i] == 'c')
@@ -23,8 +24,14 @@ static int	ft_process_format(const char *format, va_list args, int *i)
 		count += ft_putstr_fd(va_arg(args, char *), 1);
 	else if (format[*i] == 'p')
 	{
-		count += ft_putstr_fd("0x", 1);
-		count += ft_putptr_fd(va_arg(args, unsigned long), 1);
+		ptr = va_arg(args, unsigned long);
+		if (ptr == 0)
+			count += ft_putstr_fd("(nil)", 1);
+		else
+		{
+			count += ft_putstr_fd("0x", 1);
+			count += ft_putptr_fd(ptr, 1);
+		}
 	}
 	else if (format[*i] == 'd' || format[*i] == 'i')
 		count += ft_putnbr_fd(va_arg(args, int), 1);
