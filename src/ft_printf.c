@@ -6,16 +6,31 @@
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:24:31 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 01:29:54 by peda-cos         ###   ########.fr       */
+/*   Updated: 2024/10/24 05:51:53 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
+static int	ft_handle_p(va_list args)
+{
+	unsigned long	ptr;
+	int				count;
+
+	ptr = va_arg(args, unsigned long);
+	if (ptr == 0)
+		count = ft_putstr_fd("(nil)", 1);
+	else
+	{
+		count = ft_putstr_fd("0x", 1);
+		count += ft_putptr_fd(ptr, 1);
+	}
+	return (count);
+}
+
 static int	ft_process_format(const char *format, va_list args, int *i)
 {
-	int				count;
-	unsigned long	ptr;
+	int	count;
 
 	count = 0;
 	if (format[*i] == 'c')
@@ -23,16 +38,7 @@ static int	ft_process_format(const char *format, va_list args, int *i)
 	else if (format[*i] == 's')
 		count += ft_putstr_fd(va_arg(args, char *), 1);
 	else if (format[*i] == 'p')
-	{
-		ptr = va_arg(args, unsigned long);
-		if (ptr == 0)
-			count += ft_putstr_fd("(nil)", 1);
-		else
-		{
-			count += ft_putstr_fd("0x", 1);
-			count += ft_putptr_fd(ptr, 1);
-		}
-	}
+		count += ft_handle_p(args);
 	else if (format[*i] == 'd' || format[*i] == 'i')
 		count += ft_putnbr_fd(va_arg(args, int), 1);
 	else if (format[*i] == 'u')
