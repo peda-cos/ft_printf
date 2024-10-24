@@ -6,13 +6,13 @@
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:24:31 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 00:45:31 by peda-cos         ###   ########.fr       */
+/*   Updated: 2024/10/24 00:57:56 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/printft.h"
 
-int	ft_process_format(const char *format, va_list args, int *i)
+static int	ft_process_format(const char *format, va_list args, int *i)
 {
 	int	count;
 
