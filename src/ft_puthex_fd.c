@@ -6,11 +6,11 @@
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 09:04:45 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 00:54:16 by peda-cos         ###   ########.fr       */
+/*   Updated: 2024/10/24 01:17:11 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/printft.h"
+#include "../includes/ft_printf.h"
 
 static int	ft_puthex(unsigned int n, const char *base, int fd)
 {

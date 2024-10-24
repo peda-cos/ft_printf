@@ -6,11 +6,11 @@
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 12:38:53 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/22 23:08:18 by peda-cos         ###   ########.fr       */
+/*   Updated: 2024/10/24 01:17:31 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/printft.h"
+#include "../includes/ft_printf.h"
 
 int	ft_putnbr_fd(int n, int fd)
 {

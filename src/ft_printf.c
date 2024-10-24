@@ -6,11 +6,11 @@
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 21:24:31 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 00:57:56 by peda-cos         ###   ########.fr       */
+/*   Updated: 2024/10/24 01:16:17 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/printft.h"
+#include "../includes/ft_printf.h"
 
 static int	ft_process_format(const char *format, va_list args, int *i)
 {
