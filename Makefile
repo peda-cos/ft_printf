@@ -23,10 +23,10 @@ INCLUDES = -Iincludes
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rcs $@ $^
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	ar rcs $(NAME) $@
 
 clean:
 	rm -f $(OBJS)
