@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   utils_nbr_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,32 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
-int	ft_printf(const char *fmt_str, ...)
+int	ft_nbrlen_base(unsigned long n, int blen)
 {
-	va_list	ap;
-	t_fmt	fmt;
-	int		count;
-	int		ret;
+	int	len;
 
-	if (!fmt_str)
-		return (-1);
-	count = 0;
-	va_start(ap, fmt_str);
-	while (*fmt_str)
+	len = 1;
+	while (n >= (unsigned long)blen)
 	{
-		if (*fmt_str == '%')
-		{
-			fmt_str = parse_format(&fmt, fmt_str + 1);
-			ret = dispatch(&fmt, &ap);
-		}
-		else
-			ret = (int)write(1, fmt_str++, 1);
-		if (ret == -1)
-			return (va_end(ap), -1);
-		count += ret;
+		n /= blen;
+		len++;
 	}
-	va_end(ap);
+	return (len);
+}
+
+int	ft_putnbr_base(unsigned long n, char *base, int blen)
+{
+	int	count;
+
+	if (blen < 2)
+		return (0);
+	count = 0;
+	if (n >= (unsigned long)blen)
+		count += ft_putnbr_base(n / blen, base, blen);
+	count += ft_putchar_fd(base[n % blen], 1);
 	return (count);
 }

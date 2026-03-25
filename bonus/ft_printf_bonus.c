@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/05 12:38:53 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 01:17:31 by peda-cos         ###   ########.fr       */
+/*   Created: 2026/03/25 00:00:00 by peda-cos          #+#    #+#             */
+/*   Updated: 2026/03/25 00:00:00 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf_bonus.h"
 
-int	ft_putnbr_fd(int n, int fd)
+int	ft_printf(const char *fmt_str, ...)
 {
-	long	num;
+	va_list	ap;
+	t_fmt	fmt;
 	int		count;
+	int		ret;
 
-	num = n;
+	if (!fmt_str)
+		return (-1);
 	count = 0;
-	if (num < 0)
+	va_start(ap, fmt_str);
+	while (*fmt_str)
 	{
-		count += ft_putchar_fd('-', fd);
-		num = -num;
+		if (*fmt_str == '%')
+		{
+			fmt_str = parse_format(&fmt, fmt_str + 1);
+			ret = dispatch(&fmt, &ap);
+		}
+		else
+			ret = (int)write(1, fmt_str++, 1);
+		if (ret == -1)
+			return (va_end(ap), -1);
+		count += ret;
 	}
-	if (num >= 10)
-		count += ft_putnbr_fd(num / 10, fd);
-	count += ft_putchar_fd((num % 10) + '0', fd);
+	va_end(ap);
 	return (count);
 }

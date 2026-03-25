@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putunbr_fd.c                                    :+:      :+:    :+:   */
+/*   utils_write.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 09:04:45 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 01:17:51 by peda-cos         ###   ########.fr       */
+/*   Created: 2026/03/25 00:00:00 by peda-cos          #+#    #+#             */
+/*   Updated: 2026/03/25 00:00:00 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
-int	ft_putunbr_fd(unsigned int n, int fd)
+int	ft_strlen(const char *s)
 {
-	int	count;
+	int	len;
 
-	count = 0;
-	if (n >= 10)
-		count += ft_putunbr_fd(n / 10, fd);
-	count += ft_putchar_fd((n % 10) + '0', fd);
-	return (count);
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}
+
+int	ft_putchar_fd(char c, int fd)
+{
+	return ((int)write(fd, &c, 1));
+}
+
+int	ft_putstr_fd(const char *s, int fd)
+{
+	if (!s)
+		return (0);
+	return ((int)write(fd, s, ft_strlen(s)));
 }

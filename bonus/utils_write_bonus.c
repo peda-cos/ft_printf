@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   utils_write_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,32 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
-int	ft_printf(const char *fmt_str, ...)
+int	ft_strlen(const char *s)
 {
-	va_list	ap;
-	t_fmt	fmt;
-	int		count;
-	int		ret;
+	int	len;
 
-	if (!fmt_str)
-		return (-1);
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}
+
+int	ft_putchar_fd(char c, int fd)
+{
+	return ((int)write(fd, &c, 1));
+}
+
+int	ft_putstr_fd(const char *s, int fd)
+{
+	if (!s)
+		return (0);
+	return ((int)write(fd, s, ft_strlen(s)));
+}
+
+int	ft_putstr_n(const char *s, int n)
+{
+	if (!s || n <= 0)
+		return (0);
+	return ((int)write(1, s, n));
+}
+
+int	ft_pad_width(int total_width, int content_len, char fill)
+{
+	int	count;
+	int	pad;
+
 	count = 0;
-	va_start(ap, fmt_str);
-	while (*fmt_str)
+	pad = total_width - content_len;
+	while (pad > 0)
 	{
-		if (*fmt_str == '%')
-		{
-			fmt_str = parse_format(&fmt, fmt_str + 1);
-			ret = dispatch(&fmt, &ap);
-		}
-		else
-			ret = (int)write(1, fmt_str++, 1);
-		if (ret == -1)
-			return (va_end(ap), -1);
-		count += ret;
+		count += ft_putchar_fd(fill, 1);
+		pad--;
 	}
-	va_end(ap);
 	return (count);
 }

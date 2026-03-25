@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   convert_ptr_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,32 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
 
-int	ft_printf(const char *fmt_str, ...)
+static int	ptr_content_len(void *ptr)
 {
-	va_list	ap;
-	t_fmt	fmt;
-	int		count;
-	int		ret;
+	if (!ptr)
+		return (5);
+	return (2 + ft_nbrlen_base((unsigned long)ptr, 16));
+}
 
-	if (!fmt_str)
-		return (-1);
+static int	print_ptr_core(void *ptr)
+{
+	int	count;
+
+	if (!ptr)
+		return (ft_putstr_fd("(nil)", 1));
+	count = ft_putstr_fd("0x", 1);
+	count += ft_putnbr_base((unsigned long)ptr, "0123456789abcdef", 16);
+	return (count);
+}
+
+int	convert_ptr(t_fmt *fmt, va_list *ap)
+{
+	void	*ptr;
+	int		len;
+	int		count;
+
+	ptr = va_arg(*ap, void *);
+	len = ptr_content_len(ptr);
 	count = 0;
-	va_start(ap, fmt_str);
-	while (*fmt_str)
-	{
-		if (*fmt_str == '%')
-		{
-			fmt_str = parse_format(&fmt, fmt_str + 1);
-			ret = dispatch(&fmt, &ap);
-		}
-		else
-			ret = (int)write(1, fmt_str++, 1);
-		if (ret == -1)
-			return (va_end(ap), -1);
-		count += ret;
-	}
-	va_end(ap);
+	if (!fmt->flag_minus && fmt->width > len)
+		count += ft_pad_width(fmt->width, len, ' ');
+	count += print_ptr_core(ptr);
+	if (fmt->flag_minus && fmt->width > len)
+		count += ft_pad_width(fmt->width, len, ' ');
 	return (count);
 }

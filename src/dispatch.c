@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   dispatch.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,30 +12,21 @@
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *fmt_str, ...)
+int	dispatch(t_fmt *fmt, va_list *ap)
 {
-	va_list	ap;
-	t_fmt	fmt;
-	int		count;
-	int		ret;
-
-	if (!fmt_str)
-		return (-1);
-	count = 0;
-	va_start(ap, fmt_str);
-	while (*fmt_str)
-	{
-		if (*fmt_str == '%')
-		{
-			fmt_str = parse_format(&fmt, fmt_str + 1);
-			ret = dispatch(&fmt, &ap);
-		}
-		else
-			ret = (int)write(1, fmt_str++, 1);
-		if (ret == -1)
-			return (va_end(ap), -1);
-		count += ret;
-	}
-	va_end(ap);
-	return (count);
+	if (fmt->spec == 'c')
+		return (convert_char(fmt, ap));
+	else if (fmt->spec == 's')
+		return (convert_str(fmt, ap));
+	else if (fmt->spec == 'p')
+		return (convert_ptr(fmt, ap));
+	else if (fmt->spec == 'd' || fmt->spec == 'i')
+		return (convert_int(fmt, ap));
+	else if (fmt->spec == 'u')
+		return (convert_uint(fmt, ap));
+	else if (fmt->spec == 'x' || fmt->spec == 'X')
+		return (convert_hex(fmt, ap));
+	else if (fmt->spec == '%')
+		return (convert_percent(fmt));
+	return (0);
 }

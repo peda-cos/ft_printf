@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   convert_uint.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,30 +12,24 @@
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *fmt_str, ...)
+int	convert_uint(t_fmt *fmt, va_list *ap)
 {
-	va_list	ap;
-	t_fmt	fmt;
-	int		count;
-	int		ret;
+	unsigned int	val;
 
-	if (!fmt_str)
-		return (-1);
-	count = 0;
-	va_start(ap, fmt_str);
-	while (*fmt_str)
-	{
-		if (*fmt_str == '%')
-		{
-			fmt_str = parse_format(&fmt, fmt_str + 1);
-			ret = dispatch(&fmt, &ap);
-		}
-		else
-			ret = (int)write(1, fmt_str++, 1);
-		if (ret == -1)
-			return (va_end(ap), -1);
-		count += ret;
-	}
-	va_end(ap);
-	return (count);
+	(void)fmt;
+	val = va_arg(*ap, unsigned int);
+	return (ft_putnbr_base((unsigned long)val, "0123456789", 10));
+}
+
+int	convert_hex(t_fmt *fmt, va_list *ap)
+{
+	unsigned int	val;
+	char			*base;
+
+	val = va_arg(*ap, unsigned int);
+	if (fmt->spec == 'x')
+		base = "0123456789abcdef";
+	else
+		base = "0123456789ABCDEF";
+	return (ft_putnbr_base((unsigned long)val, base, 16));
 }

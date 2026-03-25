@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putptr_fd.c                                     :+:      :+:    :+:   */
+/*   utils_nbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: peda-cos <peda-cos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 09:04:45 by peda-cos          #+#    #+#             */
-/*   Updated: 2024/10/24 01:18:13 by peda-cos         ###   ########.fr       */
+/*   Created: 2026/03/25 00:00:00 by peda-cos          #+#    #+#             */
+/*   Updated: 2026/03/25 00:00:00 by peda-cos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
-int	ft_putptr_fd(unsigned long ptr, int fd)
+int	ft_nbrlen_base(unsigned long n, int blen)
+{
+	int	len;
+
+	len = 1;
+	while (n >= (unsigned long)blen)
+	{
+		n /= blen;
+		len++;
+	}
+	return (len);
+}
+
+int	ft_putnbr_base(unsigned long n, char *base, int blen)
 {
 	int	count;
 
+	if (blen < 2)
+		return (0);
 	count = 0;
-	if (ptr >= 16)
-		count += ft_putptr_fd(ptr / 16, fd);
-	count += ft_putchar_fd("0123456789abcdef"[ptr % 16], fd);
+	if (n >= (unsigned long)blen)
+		count += ft_putnbr_base(n / blen, base, blen);
+	count += ft_putchar_fd(base[n % blen], 1);
 	return (count);
 }
